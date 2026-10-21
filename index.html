@@ -17,24 +17,57 @@
 <body>
   <div id="banderines"></div>
 
-  <div id="contenedorGeneral">
-    <h1 id="tituloPagina">
-      <a href="https://en.wikipedia.org/wiki/Bestiario" target="_blank"
-        >Bestiario / Collage</a
-      >
-    </h1>
-    <p id="subtitulo">Mezcla platos típicos colombianos y descubre qué criatura sale.</p>
+  <!-- Cinta de texto en movimiento -->
+  <div id="cinta" aria-hidden="true">
+    <div class="cinta-texto">
+      <span>🥑 Sabor colombiano 🌽 Mezcla y descubre 🍌 ¡Qué richura! ☕ Sabor colombiano 🌽 Mezcla y descubre 🍌 ¡Qué richura! ☕ Sabor colombiano 🌽 Mezcla y descubre 🍌 ¡Qué richura! ☕ </span>
+      <span>🥑 Sabor colombiano 🌽 Mezcla y descubre 🍌 ¡Qué richura! ☕ Sabor colombiano 🌽 Mezcla y descubre 🍌 ¡Qué richura! ☕ Sabor colombiano 🌽 Mezcla y descubre 🍌 ¡Qué richura! ☕ </span>
+    </div>
+  </div>
 
-    <div id="contenedorPersonaje">
-      <img class="imagen" id="cabeza" src="" alt="Plato de arriba" />
-      <img class="imagen" id="tronco" src="" alt="Plato del medio" />
-      <img class="imagen" id="patas" src="" alt="Plato de abajo" />
+  <div id="contenedorGeneral">
+    <!-- Decoración flotante -->
+    <span class="deco d1" aria-hidden="true">🌶️</span>
+    <span class="deco d2" aria-hidden="true">🥑</span>
+    <span class="deco d3" aria-hidden="true">🌽</span>
+    <span class="deco d4" aria-hidden="true">🍌</span>
+    <span class="deco d5" aria-hidden="true">☕</span>
+    <span class="deco d6" aria-hidden="true">🌺</span>
+    <span class="deco d7" aria-hidden="true">🦜</span>
+    <span class="deco d8" aria-hidden="true">🌴</span>
+
+    <header id="cabecera">
+      <h1 id="tituloPagina">
+        <a href="https://en.wikipedia.org/wiki/Bestiario" target="_blank"
+          >Bestiario / Collage</a
+        >
+      </h1>
+      <p id="subtitulo">Mezcla platos típicos colombianos y descubre qué criatura sale.</p>
+    </header>
+
+    <div id="marco">
+      <div id="contenedorPersonaje">
+        <img class="imagen" id="cabeza" src="" alt="Plato de arriba" />
+        <img class="imagen" id="tronco" src="" alt="Plato del medio" />
+        <img class="imagen" id="patas" src="" alt="Plato de abajo" />
+      </div>
     </div>
 
     <!-- Aquí aparece el mensaje cuando coinciden platos -->
     <p id="mensaje" aria-live="polite"></p>
 
     <button id="boton">Mezclar</button>
+
+    <section id="reglas">
+      <h2>Cómo jugar</h2>
+      <ul>
+        <li>👆 Toca <strong>Mezclar</strong> para armar tu plato.</li>
+        <li>🌶️ Si salen <strong>2 platos iguales</strong>: ¡Casi!</li>
+        <li>🎉 Si salen <strong>3 platos iguales</strong>: ¡Criatura legendaria!</li>
+      </ul>
+    </section>
   </div>
+
+  <footer id="pie">Hecho con sabor colombiano 🇨🇴</footer>
 </body>
 </html>

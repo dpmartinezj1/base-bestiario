@@ -1,13 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Barriecito&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@600;800&display=swap');
 
-/* Paleta colombiana */
+/* Paleta colombiana, bien cargada */
 :root {
   --amarillo: #fcd116;
   --azul: #003893;
   --rojo: #ce1126;
-  --fondo: #fff6dc;
+  --verde: #0b8a4a;
+  --rosado: #ff4fa3;
+  --turquesa: #17c3b2;
+  --naranja: #ff8a1f;
+  --crema: #fff1c1;
   --tinta: #1d1408;
-  --ancho: min(80vw, 280px); /* ancho de las fotos: se achica en celulares */
+  --ancho: min(86vw, 340px); /* ancho de las fotos: se achica en celulares */
 }
 
 html {
@@ -22,28 +26,24 @@ body {
 }
 
 body {
-  background-color: var(--fondo);
-  color: var(--tinta);
-  font-family: system-ui, sans-serif;
-  /* Franja tricolor arriba de toda la página */
-  border-top: 14px solid transparent;
-  border-image: linear-gradient(
-      to bottom,
-      var(--amarillo) 0 50%,
-      var(--azul) 50% 75%,
-      var(--rojo) 75% 100%
-    )
-    1;
   min-height: 100%;
+  overflow-x: hidden;
+  font-family: 'Nunito', system-ui, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--tinta);
+  /* Fondo de puntos de colores */
+  background-color: var(--crema);
+  background-image:
+    radial-gradient(var(--rosado) 4px, transparent 5px),
+    radial-gradient(var(--turquesa) 4px, transparent 5px);
+  background-size: 56px 56px;
+  background-position: 0 0, 28px 28px;
 }
 
 ::selection {
   background-color: var(--amarillo);
   color: var(--tinta);
-}
-
-h2 {
-  font-size: 1.1em;
 }
 
 a,
@@ -55,80 +55,160 @@ a:hover {
   text-decoration: none;
 }
 
+/* Patrón zigzag tipo mochila (amarillo y rojo), reutilizado en varios lugares */
+#marco,
+#pie::before {
+  background-color: var(--rojo);
+  background-image:
+    linear-gradient(45deg, var(--amarillo) 25%, transparent 25%, transparent 75%, var(--amarillo) 75%),
+    linear-gradient(45deg, var(--amarillo) 25%, transparent 25%, transparent 75%, var(--amarillo) 75%);
+  background-size: 32px 32px;
+  background-position: 0 0, 16px 16px;
+}
+
 /* Banderines de fiesta (hechos solo con CSS) */
 #banderines {
-  height: 46px;
+  height: 56px;
   background: repeating-linear-gradient(
     90deg,
-    var(--amarillo) 0 36px,
-    var(--azul) 36px 72px,
-    var(--rojo) 72px 108px
+    var(--amarillo) 0 44px,
+    var(--azul) 44px 88px,
+    var(--rojo) 88px 132px,
+    var(--verde) 132px 176px,
+    var(--rosado) 176px 220px
   );
-  -webkit-mask: conic-gradient(
-        from -45deg at bottom,
-        #0000,
-        #000 1deg 89deg,
-        #0000 90deg
-      )
-      50% / 36px 100%;
-  mask: conic-gradient(
-        from -45deg at bottom,
-        #0000,
-        #000 1deg 89deg,
-        #0000 90deg
-      )
-      50% / 36px 100%;
+  -webkit-mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg)
+    50% / 44px 100%;
+  mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg)
+    50% / 44px 100%;
+}
+
+/* Cinta de texto en movimiento */
+#cinta {
+  overflow: hidden;
+  background-color: var(--azul);
+  color: var(--amarillo);
+  border-top: 5px solid var(--tinta);
+  border-bottom: 5px solid var(--tinta);
+  font-family: 'Lilita One', system-ui, sans-serif;
+  font-size: 1.5rem;
+  padding: 0.3rem 0;
+}
+
+.cinta-texto {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: correr 25s linear infinite;
+}
+
+@keyframes correr {
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 #contenedorGeneral {
-  margin: auto 1em;
+  position: relative;
+  margin: 0 1em;
+  padding-top: 1rem;
   text-align: center;
 }
 
+/* Todo el contenido real queda por encima de los emojis */
+#cabecera,
+#marco,
+#mensaje,
+#boton,
+#reglas {
+  position: relative;
+  z-index: 1;
+}
+
+/* Emojis flotantes */
+.deco {
+  position: absolute;
+  z-index: 0;
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  pointer-events: none;
+  user-select: none;
+  animation: flotar 3.5s ease-in-out infinite alternate;
+}
+
+.d1 { top: 1%;  left: 3%;  --giro: -15deg; }
+.d2 { top: 6%;  right: 4%; --giro: 12deg; animation-delay: -1s; }
+.d3 { top: 22%; left: 12%; --giro: -8deg; animation-delay: -2s; }
+.d4 { top: 38%; right: 10%; --giro: 18deg; animation-delay: -0.5s; }
+.d5 { top: 48%; left: 3%;  --giro: 10deg; animation-delay: -1.5s; }
+.d6 { top: 66%; right: 5%; --giro: -12deg; animation-delay: -2.5s; }
+.d7 { top: 76%; left: 9%;  --giro: 14deg; animation-delay: -3s; }
+.d8 { top: 88%; right: 14%; --giro: -6deg; animation-delay: -1.2s; }
+
+@keyframes flotar {
+  from { transform: translateY(0) rotate(var(--giro)); }
+  to   { transform: translateY(-16px) rotate(calc(var(--giro) + 10deg)); }
+}
+
+/* Título dentro de una tarjeta inclinada */
+#cabecera {
+  max-width: 760px;
+  margin: 1.4rem auto 2rem;
+  padding: 1.2rem 1.6rem 1.4rem;
+  background-color: var(--azul);
+  border: 6px solid var(--tinta);
+  outline: 4px dashed var(--amarillo);
+  outline-offset: -16px;
+  box-shadow: 10px 10px 0 var(--rosado);
+  transform: rotate(-1.5deg);
+}
+
 #tituloPagina {
-  margin-top: 0.6em;
-  margin-bottom: 0.1em;
-  font-family: 'Barriecito', system-ui;
+  margin: 0;
+  font-family: 'Lilita One', system-ui, sans-serif;
   font-weight: 400;
-  font-style: normal;
-  color: var(--azul);
-  /* sombra roja y amarilla, como letrero de fonda */
-  text-shadow: 3px 3px 0 var(--amarillo), 6px 6px 0 var(--rojo);
+  font-size: clamp(2.4rem, 9vw, 4.6rem);
+  line-height: 1.05;
+  text-shadow: 3px 3px 0 var(--rojo), 6px 6px 0 var(--tinta);
 }
 
 #tituloPagina a,
 #tituloPagina a:visited {
-  color: var(--azul);
+  color: white;
 }
 
-#tituloPagina:hover a {
-  color: var(--rojo);
-  cursor: pointer;
+#tituloPagina a:hover {
+  color: var(--amarillo);
 }
 
 #subtitulo {
-  margin: 0.8em 0 1.4em;
-  font-size: 0.95em;
+  margin: 0.6rem 0 0;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--amarillo);
 }
 
-/* Plato mixto: las tres imágenes apiladas con marco */
+/* Marco con patrón de mochila alrededor del plato mixto */
+#marco {
+  width: fit-content;
+  margin: 1.5rem auto;
+  padding: 22px;
+  border: 6px solid var(--tinta);
+  box-shadow: 10px 10px 0 var(--tinta);
+}
+
 #contenedorPersonaje {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 6px;
   width: var(--ancho);
-  margin: 0 auto;
-  padding: 8px;
-  background-color: var(--azul);
-  border: 6px solid var(--rojo);
-  outline: 4px solid var(--amarillo);
-  box-shadow: 8px 8px 0 var(--tinta);
+  padding: 6px;
+  background-color: white;
+  border: 4px solid var(--tinta);
 }
 
 .imagen {
-  width: var(--ancho);
-  height: 180px;
-  margin: 0 auto;
+  width: 100%;
+  height: 210px;
   display: block;
   object-fit: cover; /* recorta la foto para llenar el espacio, sin estirarla */
   object-position: center;
@@ -152,28 +232,41 @@ a:hover {
 }
 
 @keyframes brillo {
-  0%, 100% { box-shadow: 8px 8px 0 var(--tinta); }
-  50% { box-shadow: 0 0 40px 14px var(--amarillo); }
+  0%, 100% { box-shadow: 0 0 0 0 var(--amarillo); }
+  50% { box-shadow: 0 0 40px 16px var(--amarillo); }
 }
 
+/* Mensaje de coincidencia (se oculta solo cuando está vacío) */
 #mensaje {
-  min-height: 2.4em;
-  margin: 1.2em auto 0.4em;
-  max-width: 320px;
-  font-family: 'Barriecito', system-ui;
-  font-size: 1.5em;
+  display: block;
+  box-sizing: border-box;
+  width: fit-content;
+  max-width: 440px;
+  min-height: 3.4rem;
+  margin: 1.4rem auto 1rem;
+  padding: 0.3rem 1rem;
+  font-family: 'Lilita One', system-ui, sans-serif;
+  font-size: 2rem;
+  line-height: 1.2;
   color: var(--rojo);
+  background-color: white;
+  border: 4px dashed var(--azul);
+  transform: rotate(-1deg);
+}
+
+#mensaje:empty {
+  visibility: hidden;
 }
 
 #boton {
-  font-size: 1em;
-  font-weight: bold;
-  padding: 0.5em 1.4em;
-  margin-bottom: 2em;
+  font-family: 'Lilita One', system-ui, sans-serif;
+  font-size: 2rem;
+  padding: 0.3em 1.6em;
   background-color: var(--amarillo);
   color: var(--azul);
-  border: 3px solid var(--azul);
-  box-shadow: 4px 4px 0 var(--rojo);
+  border: 5px solid var(--tinta);
+  border-radius: 999px;
+  box-shadow: 6px 6px 0 var(--rojo), 12px 12px 0 var(--tinta);
   cursor: pointer;
 }
 
@@ -183,13 +276,63 @@ a:hover {
 }
 
 #boton:active {
-  transform: translate(3px, 3px);
-  box-shadow: 1px 1px 0 var(--rojo);
+  transform: translate(6px, 6px);
+  box-shadow: 0 0 0 var(--rojo), 6px 6px 0 var(--tinta);
 }
 
 #boton:focus-visible {
-  outline: 3px solid var(--azul);
-  outline-offset: 3px;
+  outline: 4px solid var(--azul);
+  outline-offset: 4px;
+}
+
+/* Tarjeta de reglas */
+#reglas {
+  max-width: 560px;
+  margin: 3rem auto 1rem;
+  padding: 1.2rem 1.6rem 1.4rem;
+  text-align: left;
+  background-color: white;
+  border: 5px solid var(--tinta);
+  box-shadow: 10px 10px 0 var(--turquesa);
+  transform: rotate(1deg);
+}
+
+#reglas h2 {
+  margin: 0 0 0.6rem;
+  font-family: 'Lilita One', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 2.2rem;
+  color: var(--azul);
+}
+
+#reglas ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#reglas li {
+  margin: 0.5rem 0;
+  line-height: 1.4;
+}
+
+/* Pie de página */
+#pie {
+  margin-top: 3rem;
+  padding: 0 1rem 1.6rem;
+  text-align: center;
+  background-color: var(--azul);
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+#pie::before {
+  content: "";
+  display: block;
+  height: 32px;
+  margin-bottom: 1.2rem;
+  border-bottom: 5px solid var(--tinta);
 }
 
 /* Confeti tricolor */
@@ -209,7 +352,17 @@ a:hover {
   }
 }
 
+/* Celulares: menos decoración para que se lea bien */
+@media (max-width: 700px) {
+  body { font-size: 1.15rem; }
+  .d3, .d4, .d5, .d6, .d7, .d8 { display: none; }
+  #marco { padding: 14px; }
+}
+
+/* Respeta a quien prefiere sin movimiento */
 @media (prefers-reduced-motion: reduce) {
+  .cinta-texto,
+  .deco,
   #contenedorPersonaje.casi,
   #contenedorPersonaje.legendario,
   .confeti {
