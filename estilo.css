@@ -100,7 +100,7 @@ body {
   flex-direction: column;
   gap: 6px;
   padding: 8px;
-  margin: 0.5rem 0;
+  margin: 0.5rem 0 1rem;
   background-color: var(--crema);
   border: 3px solid var(--amarillo);
   border-radius: 16px;
@@ -126,32 +126,6 @@ body {
   border-color: var(--amarillo);
 }
 
-/* Vibración cuando coinciden platos */
-#contenedorPersonaje.casi {
-  animation: vibrar 0.5s;
-}
-
-@keyframes vibrar {
-  0%, 100% { transform: rotate(0); }
-  20% { transform: rotate(-2deg); }
-  40% { transform: rotate(2deg); }
-  60% { transform: rotate(-1.5deg); }
-  80% { transform: rotate(1.5deg); }
-}
-
-/* Mensaje de coincidencia (con altura fija para que nada salte) */
-#mensaje {
-  min-height: 2.6rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 0.4rem;
-  font-family: 'Fredoka', cursive;
-  font-size: 1.25rem;
-  line-height: 1.15;
-  color: var(--rojo);
-}
-
 /* Botón principal */
 #boton {
   width: 100%;
@@ -174,33 +148,9 @@ body {
   box-shadow: 0 2px 0 var(--rojo);
 }
 
-/* Botón pequeño de música */
-#botonMusica {
-  margin-top: 1rem;
-  padding: 0.45rem 1.1rem;
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.95rem;
-  font-weight: 600;
-  background: white;
-  color: var(--azul);
-  border: 2px solid var(--azul);
-  border-radius: 30px;
-  cursor: pointer;
-}
-
-#botonMusica:active {
-  background: var(--amarillo);
-}
-
-#boton:focus-visible,
-#botonMusica:focus-visible {
+#boton:focus-visible {
   outline: 3px solid var(--azul);
   outline-offset: 3px;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  #contenedorPersonaje.casi {
-    animation: none;
-  }
-}
 

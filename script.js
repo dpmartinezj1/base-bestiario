@@ -14,20 +14,42 @@ const listaCabezas = [
 const listaTroncos = listaCabezas;
 const listaPatas = listaCabezas;
 
-// Ayuda extra para que las coincidencias salgan más seguido.
-// 0.35 = 35% de las mezclas fuerzan coincidencia (de esas, 1 de cada 4 es triple).
-// Pon 0 si quieres que sea 100% azar.
-const PROBABILIDAD_EXTRA = 0.35;
+// Probabilidad de que salgan las 3 fotos iguales (0.2 = 1 de cada 5 mezclas).
+// Con 10 fotos y 0 de ayuda, sería solo 1 de cada 100.
+const PROBABILIDAD_TRIPLE = 0.2;
 
 // Elementos HTML
 const cabeza = document.getElementById("cabeza");
 const tronco = document.getElementById("tronco");
 const patas = document.getElementById("patas");
 const boton = document.getElementById("boton");
-const botonMusica = document.getElementById("botonMusica");
-const mensaje = document.getElementById("mensaje");
-const contenedorPersonaje = document.getElementById("contenedorPersonaje");
-const musica = document.getElementById("musicaPollera");
+
+// Canción: prueba cada ruta en orden hasta encontrar el archivo
+const rutasMusica = [
+  "assets/img/pollera.mp3",
+  "pollera.mp3",
+  "assets/pollera.mp3",
+  "assets/img/La Pollera Colora (Letra Lyrics).mp3",
+  "La Pollera Colora (Letra Lyrics).mp3",
+].map(encodeURI);
+
+let rutaActual = 0;
+const musica = new Audio();
+musica.preload = "auto";
+
+musica.addEventListener("error", function () {
+  rutaActual++;
+  if (rutaActual < rutasMusica.length) {
+    musica.src = rutasMusica[rutaActual];
+    musica.load();
+  } else {
+    console.log("No encontré el mp3. Renómbralo a pollera.mp3 y ponlo en assets/img/");
+  }
+});
+
+// Se carga apenas abre la página, así ya está lista cuando coincidan las 3
+musica.src = rutasMusica[rutaActual];
+musica.load();
 
 function numeroAleatorio(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
@@ -45,75 +67,36 @@ function lanzarConfetiColombiano() {
   }
 }
 
-// Reproduce la canción y avisa en pantalla si algo falla
-function sonarMusica() {
-  musica.currentTime = 0;
-  const promesa = musica.play();
-  if (promesa !== undefined) {
-    promesa.catch(function (err) {
-      console.log("Audio:", err);
-      if (err.name === "NotSupportedError") {
-        mensaje.textContent = "🔇 No encuentro el mp3: revisa su nombre y carpeta";
-      } else {
-        mensaje.textContent = "🔇 Toca 'Probar música' para activar el sonido";
-      }
-    });
-  }
-}
-
 // conEfectos = false en la carga de la página (sin música ni confeti)
 function generarBestia(conEfectos) {
   let idxCabeza = numeroAleatorio(0, listaCabezas.length);
   let idxTronco = numeroAleatorio(0, listaTroncos.length);
   let idxPatas = numeroAleatorio(0, listaPatas.length);
 
-  // Ayuda extra para que haya coincidencias más seguido
-  if (conEfectos) {
-    const suerte = Math.random();
-    if (suerte < PROBABILIDAD_EXTRA * 0.25) {
-      // Triple
-      idxTronco = idxCabeza;
-      idxPatas = idxCabeza;
-    } else if (suerte < PROBABILIDAD_EXTRA) {
-      // Doble: un espacio al azar copia a otro
-      const copiar = numeroAleatorio(0, 3);
-      if (copiar === 0) idxTronco = idxCabeza;
-      if (copiar === 1) idxPatas = idxTronco;
-      if (copiar === 2) idxPatas = idxCabeza;
-    }
+  // Ayuda para que las 3 iguales salgan más seguido
+  if (conEfectos && Math.random() < PROBABILIDAD_TRIPLE) {
+    idxTronco = idxCabeza;
+    idxPatas = idxCabeza;
   }
 
   cabeza.src = listaCabezas[idxCabeza];
   tronco.src = listaTroncos[idxTronco];
   patas.src = listaPatas[idxPatas];
 
-  // Limpiamos los efectos de la mezcla anterior
-  contenedorPersonaje.classList.remove("casi");
-  mensaje.textContent = "";
+  // Cada mezcla nueva corta la música anterior
   musica.pause();
   musica.currentTime = 0;
-  botonMusica.textContent = "🔊 Probar música";
 
   if (!conEfectos) return;
 
   // Como las tres listas son las mismas, comparamos los índices
   const tresIguales = idxCabeza === idxTronco && idxTronco === idxPatas;
-  const dosIguales =
-    idxCabeza === idxTronco || idxTronco === idxPatas || idxCabeza === idxPatas;
-
-  if (dosIguales) {
-    void contenedorPersonaje.offsetWidth; // reinicia la animación
-    contenedorPersonaje.classList.add("casi");
-    mensaje.textContent = tresIguales
-      ? "¡Criatura legendaria! 🎉"
-      : "¡Casi! Dos platos iguales";
-
-    // El play() va directo dentro del clic, así los celulares lo permiten
-    sonarMusica();
-    botonMusica.textContent = "⏸ Pausar música";
-  }
 
   if (tresIguales) {
+    // El play() va directo dentro del clic, así los celulares lo permiten
+    musica.play().catch(function (err) {
+      console.log("Audio:", err);
+    });
     lanzarConfetiColombiano();
   }
 }
@@ -123,24 +106,6 @@ boton.addEventListener("click", function () {
   generarBestia(true);
 });
 
-// Botón para probar o pausar la música
-botonMusica.addEventListener("click", function () {
-  if (musica.paused) {
-    mensaje.textContent = "";
-    sonarMusica();
-    botonMusica.textContent = "⏸ Pausar música";
-  } else {
-    musica.pause();
-    botonMusica.textContent = "🔊 Probar música";
-  }
-});
-
-// Cuando la canción termina, el botón vuelve a su texto normal
-musica.addEventListener("ended", function () {
-  botonMusica.textContent = "🔊 Probar música";
-});
-
 // Primera carga
 generarBestia(false);
-
 
