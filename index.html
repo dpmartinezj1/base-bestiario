@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="/favicon.ico" sizes="any" />
   <title>¿Qué comida colombiana eres?</title>
 
   <!-- Tipografía festivalera -->
@@ -24,8 +23,14 @@
   <script src="script.js" defer></script>
 </head>
 <body>
-  <!-- Canción: renombra tu mp3 a pollera.mp3 -->
-  <audio id="musicaPollera" src="assets/img/pollera.mp3" preload="auto" playsinline></audio>
+  <!-- Canción: el navegador prueba cada ruta en orden hasta encontrar el archivo -->
+  <audio id="musicaPollera" preload="auto" playsinline>
+    <source src="assets/img/pollera.mp3" type="audio/mpeg" />
+    <source src="pollera.mp3" type="audio/mpeg" />
+    <source src="assets/pollera.mp3" type="audio/mpeg" />
+    <source src="assets/img/La%20Pollera%20Colora%20%28Letra%20Lyrics%29.mp3" type="audio/mpeg" />
+    <source src="La%20Pollera%20Colora%20%28Letra%20Lyrics%29.mp3" type="audio/mpeg" />
+  </audio>
 
   <main id="contenedorGeneral">
     <!-- Banderines de fiesta -->
@@ -43,6 +48,7 @@
     <p id="mensaje" aria-live="polite"></p>
 
     <button id="boton">¡DESCÚBRELO!</button>
+    <button id="botonMusica" type="button">🔊 Probar música</button>
   </main>
 </body>
 </html>
