@@ -2,7 +2,14 @@
 const listaCabezas = [
   "../base-bestiario/assets/img/cabeza1.jpg",
   "../base-bestiario/assets/img/cabeza2.jpg",
-  "../base-bestiario/assets/img/cabeza3.png",
+  "../base-bestiario/assets/img/cabeza3.jpg",
+  "../base-bestiario/assets/img/cabeza4.jpg",
+  "../base-bestiario/assets/img/cabeza5.jpg",
+  "../base-bestiario/assets/img/cabeza6.jpg",
+  "../base-bestiario/assets/img/cabeza7.jpg",
+  "../base-bestiario/assets/img/cabeza8.jpg",
+  "../base-bestiario/assets/img/cabeza9.jpg",
+  "../base-bestiario/assets/img/cabeza10.jpg",
 ];
 const listaTroncos = [
  "../base-bestiario/assets/img/tronco1.jpg",
