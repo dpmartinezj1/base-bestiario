@@ -1,4 +1,4 @@
-// Listas de imágenes apuntando a assets/img/
+// Listas de imágenes
 const listaCabezas = [
   "assets/img/cabeza1.jpg",
   "assets/img/cabeza2.jpg",
@@ -16,7 +16,7 @@ const listaTroncos = [
   "assets/img/tronco1.jpg",
   "assets/img/tronco2.jpg",
   "assets/img/tronco3.jpg",
-  "assets/img/cabeza4.jpg", // Ajusta según el nombre de tus imágenes
+  "assets/img/cabeza4.jpg",
   "assets/img/cabeza5.jpg",
   "assets/img/cabeza6.jpg",
   "assets/img/cabeza7.jpg",
@@ -29,7 +29,7 @@ const listaPatas = [
   "assets/img/patas1.jpg",
   "assets/img/patas2.jpg",
   "assets/img/patas3.png",
-  "assets/img/cabeza4.jpg", // Ajusta según el nombre de tus imágenes
+  "assets/img/cabeza4.jpg",
   "assets/img/cabeza5.jpg",
   "assets/img/cabeza6.jpg",
   "assets/img/cabeza7.jpg",
@@ -49,22 +49,20 @@ let cabezaAleatorio = 0;
 let troncoAleatorio = 0;
 let patasAleatorio = 0;
 
-// Función para generar número aleatorio
 function numeroAleatorio(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
-// Lanza confeti con los colores de la bandera de Colombia
+// Confeti tricolor (Amarillo, Azul y Rojo)
 function lanzarConfetiColombiano() {
   confetti({
-    particleCount: 120,
-    spread: 80,
+    particleCount: 130,
+    spread: 90,
     origin: { y: 0.6 },
-    colors: ['#facc15', '#003893', '#ce1126'] // Amarillo, Azul y Rojo
+    colors: ['#facc15', '#003893', '#ce1126']
   });
 }
 
-// Genera la mezcla de imágenes
 function generarBestia() {
   cabezaAleatorio = numeroAleatorio(0, listaCabezas.length);
   troncoAleatorio = numeroAleatorio(0, listaTroncos.length);
@@ -74,24 +72,30 @@ function generarBestia() {
   tronco.src = listaTroncos[troncoAleatorio];
   patas.src = listaPatas[patasAleatorio];
 
-  console.log("Cabeza:", cabezaAleatorio, "Tronco:", troncoAleatorio, "Patas:", patasAleatorio);
+  // Contar cuántas coincidencias hay entre las 3 selecciones
+  const coincidencia2 = (cabezaAleatorio === troncoAleatorio) || 
+                       (troncoAleatorio === patasAleatorio) || 
+                       (cabezaAleatorio === patasAleatorio);
 
-  // Comprobar si coinciden los 3 espacios
-  if (cabezaAleatorio === troncoAleatorio && troncoAleatorio === patasAleatorio) {
-    // Reproduce la música
+  const coincidencia3 = (cabezaAleatorio === troncoAleatorio && troncoAleatorio === patasAleatorio);
+
+  // Si coinciden 2 o 3, suena la canción
+  if (coincidencia2 || coincidencia3) {
     musica.currentTime = 0;
-    musica.play().catch(e => console.log("Permiso de audio requerido:", e));
+    musica.play().catch(e => console.log("Permiso de reproducción requerido:", e));
+  }
 
-    // Lanza el confeti tricolor
+  // Si coinciden las 3, ADEMÁS sale el confeti
+  if (coincidencia3) {
     lanzarConfetiColombiano();
   }
 }
 
-// Evento al hacer clic en Mezclar
 boton.addEventListener("click", function () {
   generarBestia();
 });
 
-// Cargar la primera combinación al iniciar
+// Cargar combinación inicial
 generarBestia();
+
 
