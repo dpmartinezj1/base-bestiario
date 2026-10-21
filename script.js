@@ -12,16 +12,29 @@ const listaCabezas = [
   "../base-bestiario/assets/img/cabeza10.jpg",
 ];
 const listaTroncos = [
- "../base-bestiario/assets/img/tronco1.jpg",
-  "../base-bestiario/assets/img/tronco2.jpg",
-  "../base-bestiario/assets/img/tronco3.jpg",
+  "../base-bestiario/assets/img/cabeza1.jpg",
+  "../base-bestiario/assets/img/cabeza2.jpg",
+  "../base-bestiario/assets/img/cabeza3.jpg",
+  "../base-bestiario/assets/img/cabeza4.jpg",
+  "../base-bestiario/assets/img/cabeza5.jpg",
+  "../base-bestiario/assets/img/cabeza6.jpg",
+  "../base-bestiario/assets/img/cabeza7.jpg",
+  "../base-bestiario/assets/img/cabeza8.jpg",
+  "../base-bestiario/assets/img/cabeza9.jpg",
+  "../base-bestiario/assets/img/cabeza10.jpg",
 ];
 const listaPatas = [
-  "../base-bestiario/assets/img/patas1.jpg",
-  "../base-bestiario/assets/img/patas2.jpg",
-  "../base-bestiario/assets/img/patas3.png",
+  "../base-bestiario/assets/img/cabeza1.jpg",
+  "../base-bestiario/assets/img/cabeza2.jpg",
+  "../base-bestiario/assets/img/cabeza3.jpg",
+  "../base-bestiario/assets/img/cabeza4.jpg",
+  "../base-bestiario/assets/img/cabeza5.jpg",
+  "../base-bestiario/assets/img/cabeza6.jpg",
+  "../base-bestiario/assets/img/cabeza7.jpg",
+  "../base-bestiario/assets/img/cabeza8.jpg",
+  "../base-bestiario/assets/img/cabeza9.jpg",
+  "../base-bestiario/assets/img/cabeza10.jpg",
 ];
-
 // Obtenemos los contenedores de las imágenes del HTML usando los IDs
 const cabeza = document.getElementById("cabeza");
 const tronco = document.getElementById("tronco");
