@@ -1,51 +1,40 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/favicon.ico" sizes="any" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/sitio.webmanifest" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>..:: Bestiario Colombiano ::..</title>
 
-    <title>..:: Collage ::..</title>
-    <!-- <meta name="description" content="Descripción del sitio...." /> -->
+  <!-- OpenGraph -->
+  <meta property="og:locale" content="es_CO" />
+  <meta property="og:type" content="website" />
 
-    <!-- OpenGraph -->
-    <meta property="og:locale" content="es_CO" />
-    <meta property="og:type" content="website" />
-    <!-- Esto importa la hoja de estilos de la página -->
-    <link rel="stylesheet" href="estilo.css" />​
+  <!-- Esto importa la hoja de estilos de la página -->
+  <link rel="stylesheet" href="estilo.css" />
+  <!-- Esto importa el archivo de JavaScript de la página -->
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div id="banderines"></div>
 
-    <!-- Esto importa el archivo de JavaScript de la página -->
-    <script src="script.js" defer></script>
-  </head>
-  <body>
-    <div id="contenedorGeneral">
-      <h1 id="tituloPagina">
-        <a href="https://en.wikipedia.org/wiki/Bestiario" target="_blank"
-          >Bestiario / Collage</a
-        >
-      </h1>
-      <div id="contenedorPersonaje">
-        <img
-          class="imagen"
-          id="cabeza"
-          src=""
-        />
-        <img
-          class="imagen"
-          id="tronco"
-          src=""
-        />
-        <img
-          class="imagen"
-          id="patas"
-          src=""
-        />
-      </div>
+  <div id="contenedorGeneral">
+    <h1 id="tituloPagina">
+      <a href="https://en.wikipedia.org/wiki/Bestiario" target="_blank"
+        >Bestiario / Collage</a
+      >
+    </h1>
+    <p id="subtitulo">Mezcla platos típicos colombianos y descubre qué criatura sale.</p>
 
-      <button id="boton">Mezclar</button>
+    <div id="contenedorPersonaje">
+      <img class="imagen" id="cabeza" src="" alt="Plato de arriba" />
+      <img class="imagen" id="tronco" src="" alt="Plato del medio" />
+      <img class="imagen" id="patas" src="" alt="Plato de abajo" />
     </div>
-  </body>
+
+    <!-- Aquí aparece el mensaje cuando coinciden platos -->
+    <p id="mensaje" aria-live="polite"></p>
+
+    <button id="boton">Mezclar</button>
+  </div>
+</body>
 </html>

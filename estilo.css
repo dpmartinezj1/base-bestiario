@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Barriecito&display=swap');
 
+/* Paleta colombiana */
+:root {
+  --amarillo: #fcd116;
+  --azul: #003893;
+  --rojo: #ce1126;
+  --fondo: #fff6dc;
+  --tinta: #1d1408;
+  --ancho: min(80vw, 280px); /* ancho de las fotos: se achica en celulares */
+}
 
 html {
   box-sizing: border-box;
@@ -12,20 +21,63 @@ body {
   padding: 0;
 }
 
+body {
+  background-color: var(--fondo);
+  color: var(--tinta);
+  font-family: system-ui, sans-serif;
+  /* Franja tricolor arriba de toda la página */
+  border-top: 14px solid transparent;
+  border-image: linear-gradient(
+      to bottom,
+      var(--amarillo) 0 50%,
+      var(--azul) 50% 75%,
+      var(--rojo) 75% 100%
+    )
+    1;
+  min-height: 100%;
+}
+
 ::selection {
-  background-color: #30cac073;
-  color: #130808;
+  background-color: var(--amarillo);
+  color: var(--tinta);
 }
 
 h2 {
   font-size: 1.1em;
-  
 }
 
-a, a:active, a:visited, a:hover {
-  color: rgb(193, 120, 199);
+a,
+a:active,
+a:visited,
+a:hover {
+  color: var(--azul);
   cursor: pointer;
   text-decoration: none;
+}
+
+/* Banderines de fiesta (hechos solo con CSS) */
+#banderines {
+  height: 46px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--amarillo) 0 36px,
+    var(--azul) 36px 72px,
+    var(--rojo) 72px 108px
+  );
+  -webkit-mask: conic-gradient(
+        from -45deg at bottom,
+        #0000,
+        #000 1deg 89deg,
+        #0000 90deg
+      )
+      50% / 36px 100%;
+  mask: conic-gradient(
+        from -45deg at bottom,
+        #0000,
+        #000 1deg 89deg,
+        #0000 90deg
+      )
+      50% / 36px 100%;
 }
 
 #contenedorGeneral {
@@ -34,34 +86,133 @@ a, a:active, a:visited, a:hover {
 }
 
 #tituloPagina {
-  margin-top: 1em;
-  margin-bottom: 0;
-  margin-bottom: 0.5em;
-  font-family: "Barriecito", system-ui;
+  margin-top: 0.6em;
+  margin-bottom: 0.1em;
+  font-family: 'Barriecito', system-ui;
   font-weight: 400;
   font-style: normal;
+  color: var(--azul);
+  /* sombra roja y amarilla, como letrero de fonda */
+  text-shadow: 3px 3px 0 var(--amarillo), 6px 6px 0 var(--rojo);
 }
 
-#tituloPagina:hover {
-  color: pink;
+#tituloPagina a,
+#tituloPagina a:visited {
+  color: var(--azul);
+}
+
+#tituloPagina:hover a {
+  color: var(--rojo);
   cursor: pointer;
 }
 
+#subtitulo {
+  margin: 0.8em 0 1.4em;
+  font-size: 0.95em;
+}
+
+/* Plato mixto: las tres imágenes apiladas con marco */
 #contenedorPersonaje {
   display: flex;
   flex-direction: column;
-  align-items: space-around;
+  align-items: center;
+  width: var(--ancho);
+  margin: 0 auto;
+  padding: 8px;
+  background-color: var(--azul);
+  border: 6px solid var(--rojo);
+  outline: 4px solid var(--amarillo);
+  box-shadow: 8px 8px 0 var(--tinta);
 }
 
 .imagen {
-  height: 170px;
-  width: 150px;
-  margin: 0em auto;
+  width: var(--ancho);
+  height: 180px;
+  margin: 0 auto;
+  display: block;
+  object-fit: cover; /* recorta la foto para llenar el espacio, sin estirarla */
+  object-position: center;
+}
+
+/* Efectos cuando coinciden platos */
+#contenedorPersonaje.casi {
+  animation: vibrar 0.5s;
+}
+
+#contenedorPersonaje.legendario {
+  animation: brillo 1.2s ease-in-out 3;
+}
+
+@keyframes vibrar {
+  0%, 100% { transform: rotate(0); }
+  20% { transform: rotate(-3deg); }
+  40% { transform: rotate(3deg); }
+  60% { transform: rotate(-2deg); }
+  80% { transform: rotate(2deg); }
+}
+
+@keyframes brillo {
+  0%, 100% { box-shadow: 8px 8px 0 var(--tinta); }
+  50% { box-shadow: 0 0 40px 14px var(--amarillo); }
+}
+
+#mensaje {
+  min-height: 2.4em;
+  margin: 1.2em auto 0.4em;
+  max-width: 320px;
+  font-family: 'Barriecito', system-ui;
+  font-size: 1.5em;
+  color: var(--rojo);
 }
 
 #boton {
-  font-size: 0.9em;
-  background-color:  rgb(193, 120, 199);
-  color: white;
+  font-size: 1em;
+  font-weight: bold;
+  padding: 0.5em 1.4em;
+  margin-bottom: 2em;
+  background-color: var(--amarillo);
+  color: var(--azul);
+  border: 3px solid var(--azul);
+  box-shadow: 4px 4px 0 var(--rojo);
   cursor: pointer;
+}
+
+#boton:hover {
+  background-color: var(--rojo);
+  color: white;
+}
+
+#boton:active {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 var(--rojo);
+}
+
+#boton:focus-visible {
+  outline: 3px solid var(--azul);
+  outline-offset: 3px;
+}
+
+/* Confeti tricolor */
+.confeti {
+  position: fixed;
+  top: -20px;
+  width: 10px;
+  height: 16px;
+  z-index: 10;
+  pointer-events: none;
+  animation: caer linear forwards;
+}
+
+@keyframes caer {
+  to {
+    transform: translateY(105vh) rotate(720deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #contenedorPersonaje.casi,
+  #contenedorPersonaje.legendario,
+  .confeti {
+    animation: none;
+  }
 }
