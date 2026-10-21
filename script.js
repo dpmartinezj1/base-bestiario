@@ -1,4 +1,4 @@
-// Rutas exactas a la carpeta de tus imágenes
+// Las tres posiciones usan las mismas fotos de comida
 const listaCabezas = [
   "assets/img/cabeza1.jpg",
   "assets/img/cabeza2.jpg",
@@ -9,67 +9,38 @@ const listaCabezas = [
   "assets/img/cabeza7.jpg",
   "assets/img/cabeza8.jpg",
   "assets/img/cabeza9.jpg",
-  "assets/img/cabeza10.jpg"
+  "assets/img/cabeza10.jpg",
 ];
-
-const listaTroncos = [
-  "assets/img/tronco1.jpg",
-  "assets/img/tronco2.jpg",
-  "assets/img/tronco3.jpg",
-  "assets/img/tronco1.jpg",
-  "assets/img/tronco2.jpg",
-  "assets/img/tronco3.jpg",
-  "assets/img/tronco1.jpg",
-  "assets/img/tronco2.jpg",
-  "assets/img/tronco3.jpg",
-  "assets/img/tronco1.jpg"
-];
-
-const listaPatas = [
-  "assets/img/patas1.jpg",
-  "assets/img/patas2.jpg",
-  "assets/img/patas3.png",
-  "assets/img/patas1.jpg",
-  "assets/img/patas2.jpg",
-  "assets/img/patas3.png",
-  "assets/img/patas1.jpg",
-  "assets/img/patas2.jpg",
-  "assets/img/patas3.png",
-  "assets/img/patas1.jpg"
-];
-
-// Nombres para comparar combinaciones reales (extrae el número de la imagen)
-function obtenerNumero(ruta) {
-  const coincidencia = ruta.match(/\d+/);
-  return coincidencia ? coincidencia[0] : null;
-}
+const listaTroncos = listaCabezas;
+const listaPatas = listaCabezas;
 
 // Elementos HTML
 const cabeza = document.getElementById("cabeza");
 const tronco = document.getElementById("tronco");
 const patas = document.getElementById("patas");
 const boton = document.getElementById("boton");
+const mensaje = document.getElementById("mensaje");
+const contenedorPersonaje = document.getElementById("contenedorPersonaje");
 const musica = document.getElementById("musicaPollera");
-
-let audioInicializado = false;
 
 function numeroAleatorio(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
-// Confeti tricolor (Amarillo, Azul y Rojo)
+// Confeti con los colores de la bandera (más rosado y turquesa de carnaval)
 function lanzarConfetiColombiano() {
   if (typeof confetti === "function") {
     confetti({
-      particleCount: 110,
+      particleCount: 120,
       spread: 80,
       origin: { y: 0.6 },
-      colors: ['#facc15', '#003893', '#ce1126']
+      colors: ["#fcd116", "#003893", "#ce1126", "#e6007e", "#00a99d"],
     });
   }
 }
 
-function generarBestia() {
+// conEfectos = false en la carga de la página (sin música ni confeti)
+function generarBestia(conEfectos) {
   const idxCabeza = numeroAleatorio(0, listaCabezas.length);
   const idxTronco = numeroAleatorio(0, listaTroncos.length);
   const idxPatas = numeroAleatorio(0, listaPatas.length);
@@ -78,44 +49,40 @@ function generarBestia() {
   tronco.src = listaTroncos[idxTronco];
   patas.src = listaPatas[idxPatas];
 
-  // Extraer los números de los nombres del archivo (ej. tronco1.jpg -> 1)
-  const numCabeza = obtenerNumero(listaCabezas[idxCabeza]);
-  const numTronco = obtenerNumero(listaTroncos[idxTronco]);
-  const numPatas = obtenerNumero(listaPatas[idxPatas]);
+  // Limpiamos los efectos de la mezcla anterior
+  contenedorPersonaje.classList.remove("casi");
+  mensaje.textContent = "";
+  musica.pause();
+  musica.currentTime = 0;
 
-  // Verificar si hay 2 o 3 iguales por número de pieza
-  const coincidencia2 = (numCabeza === numTronco) || (numTronco === numPatas) || (numCabeza === numPatas);
-  const coincidencia3 = (numCabeza === numTronco && numTronco === numPatas);
+  if (!conEfectos) return;
 
-  // Lógica de Sonido y Confeti
-  if (coincidencia2 || coincidencia3) {
-    musica.currentTime = 0;
-    musica.play().catch(err => console.log("Permiso de audio móvil:", err));
+  // Como las tres listas son las mismas, comparamos los índices
+  const tresIguales = idxCabeza === idxTronco && idxTronco === idxPatas;
+  const dosIguales =
+    idxCabeza === idxTronco || idxTronco === idxPatas || idxCabeza === idxPatas;
+
+  if (dosIguales) {
+    void contenedorPersonaje.offsetWidth; // reinicia la animación
+    contenedorPersonaje.classList.add("casi");
+    mensaje.textContent = tresIguales
+      ? "¡Criatura legendaria! 🎉"
+      : "¡Casi! Dos platos iguales";
+
+    // El play() va directo dentro del clic, así los celulares lo permiten
+    musica.play().catch((err) => console.log("No se pudo reproducir:", err));
   }
 
-  if (coincidencia3) {
+  if (tresIguales) {
     lanzarConfetiColombiano();
   }
 }
 
-// Evento principal optimizado para teléfonos
+// Cada clic en el botón arma una nueva mezcla
 boton.addEventListener("click", function () {
-  // Desbloquea restricciones de audio de iOS/Safari en el primer clic
-  if (!audioInicializado) {
-    musica.play().then(() => {
-      musica.pause();
-      musica.currentTime = 0;
-      audioInicializado = true;
-      generarBestia();
-    }).catch(() => {
-      generarBestia();
-    });
-  } else {
-    generarBestia();
-  }
+  generarBestia(true);
 });
 
 // Primera carga
-generarBestia();
-
+generarBestia(false);
 

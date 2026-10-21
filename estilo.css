@@ -1,4 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Poppins:wght@600;800&display=swap');
+:root {
+  --amarillo: #fcd116;
+  --azul: #003893;
+  --rojo: #ce1126;
+  --rosado: #e6007e;
+  --turquesa: #00a99d;
+  --naranja: #ff8a1f;
+  --crema: #fff4d6;
+  --tinta: #2a1a0a;
+}
 
 * {
   box-sizing: border-box;
@@ -6,83 +15,143 @@
   padding: 0;
 }
 
-html, body {
+html,
+body {
   width: 100%;
   height: 100vh;
-  height: 100dvh; /* Soporte para navegadores móviles con barra dinámicas */
-  overflow: hidden; /* Evita scroll no deseado */
-  background: linear-gradient(135deg, #fff7ed 0%, #fef3c7 50%, #fee2e2 100%);
-  font-family: 'Poppins', sans-serif;
+  height: 100dvh; 
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: 'Poppins', sans-serif;
+  color: var(--tinta);
+  background-color: var(--crema);
+  background-image:
+    radial-gradient(#f7b3d6 3px, transparent 4px),
+    radial-gradient(#9fe0da 3px, transparent 4px);
+  background-size: 48px 48px;
+  background-position: 0 0, 24px 24px;
 }
 
 #contenedorGeneral {
+  position: relative;
   width: 92%;
-  max-width: 380px; /* Ancho de pantalla móvil de referencia */
+  max-width: 380px;
   height: 94vh;
   height: 94dvh;
   max-height: 720px;
-  padding: 1.2rem 1rem;
+  padding: 2.9rem 1rem 1rem;
   text-align: center;
   background: #ffffff;
+  border: 4px solid var(--azul);
   border-radius: 24px;
-  box-shadow: 0 10px 30px rgba(225, 29, 72, 0.15);
-  border: 4px solid #f59e0b;
-  position: relative;
+  box-shadow: 6px 6px 0 var(--rojo);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
   overflow: hidden;
-}
 
-/* Cinta tricolor colombiana superior */
-.cinta-festival {
+.banderines {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 8px;
-  background: linear-gradient(to right, #facc15 33.3%, #003893 33.3% 66.6%, #ce1126 66.6%);
+  height: 34px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--amarillo) 0 34px,
+    var(--azul) 34px 68px,
+    var(--rojo) 68px 102px,
+    var(--rosado) 102px 136px,
+    var(--turquesa) 136px 170px
+  );
+  -webkit-mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 0 0 / 34px 100%;
+  mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 0 0 / 34px 100%;
 }
 
 #tituloPagina {
-  margin-top: 0.2rem;
   font-family: 'Fredoka', cursive;
-  font-size: 1.55rem;
-  line-height: 1.2;
-  color: #dc2626;
+  font-size: 1.6rem;
+  line-height: 1.15;
+  color: var(--azul);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  text-shadow: 1px 1px 0px #fef08a;
+  text-shadow: 2px 2px 0 var(--amarillo);
 }
 
+/* Cinta de colores bajo el título */
+.cinta {
+  width: 70%;
+  height: 6px;
+  margin: 0.6rem 0 0.2rem;
+  border-radius: 6px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--rosado) 0 14px,
+    var(--naranja) 14px 28px,
+    var(--turquesa) 28px 42px
+  );
+}
+
+/* Contenedor de las 3 fotos: se reparten la altura disponible */
 #contenedorPersonaje {
   width: 100%;
   flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: #fffbeb;
-  padding: 0.5rem;
-  border-radius: 16px;
-  border: 2px dashed #f59e0b;
+  gap: 6px;
+  padding: 8px;
   margin: 0.5rem 0;
+  background-color: var(--crema);
+  border: 3px solid var(--rosado);
+  border-radius: 16px;
 }
 
-/* Las imágenes toman un tamaño proporcional al contenedor del móvil */
 .imagen {
+  flex: 1 1 0;
+  min-height: 0;
   width: 100%;
-  max-width: 175px;
-  height: 28vh;
-  max-height: 165px;
-  object-fit: cover;
-  margin: -1px 0;
+  object-fit: cover; /* recorta sin deformar */
+  object-position: center;
+  border: 3px solid var(--rojo);
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  background-color: white;
+}
+
+.imagen:nth-child(2) {
+  border-color: var(--amarillo);
+}
+
+.imagen:nth-child(3) {
+  border-color: var(--azul);
+}
+
+/* Vibración cuando coinciden platos */
+#contenedorPersonaje.casi {
+  animation: vibrar 0.5s;
+}
+
+@keyframes vibrar {
+  0%, 100% { transform: rotate(0); }
+  20% { transform: rotate(-2deg); }
+  40% { transform: rotate(2deg); }
+  60% { transform: rotate(-1.5deg); }
+  80% { transform: rotate(1.5deg); }
+}
+
+/* Mensaje de coincidencia (con altura fija para que nada salte) */
+#mensaje {
+  min-height: 2.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+  font-family: 'Fredoka', cursive;
+  font-size: 1.25rem;
+  line-height: 1.1;
+  color: var(--rojo);
 }
 
 /* Botón llamativo optimizado para toques en móvil */
@@ -92,11 +161,11 @@ html, body {
   font-family: 'Fredoka', cursive;
   font-size: 1.35rem;
   background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
-  color: #1e3a8a;
-  border: 3px solid #dc2626;
+  color: var(--azul);
+  border: 3px solid var(--rojo);
   border-radius: 40px;
   cursor: pointer;
-  box-shadow: 0 5px 0px #dc2626;
+  box-shadow: 0 5px 0 var(--rojo);
   letter-spacing: 1px;
   -webkit-tap-highlight-color: transparent;
   transition: transform 0.1s ease, box-shadow 0.1s ease;
@@ -104,5 +173,16 @@ html, body {
 
 #boton:active {
   transform: translateY(3px);
-  box-shadow: 0 2px 0px #dc2626;
+  box-shadow: 0 2px 0 var(--rojo);
+}
+
+#boton:focus-visible {
+  outline: 3px solid var(--azul);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #contenedorPersonaje.casi {
+    animation: none;
+  }
 }

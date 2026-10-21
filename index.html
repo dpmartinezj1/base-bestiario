@@ -2,47 +2,47 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <title>¿Qué comida colombiana eres?</title>
-  
+
   <!-- Tipografía festivalera -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Poppins:wght@600;800&display=swap" rel="stylesheet">
-  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Poppins:wght@600;800&display=swap"
+    rel="stylesheet"
+  />
+
   <!-- Hoja de estilos -->
   <link rel="stylesheet" href="estilo.css" />
-  
-  <!-- Librería de Confeti por CDN -->
+
+  <!-- Librería de confeti por CDN -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  
+
   <!-- Script principal -->
   <script src="script.js" defer></script>
 </head>
 <body>
-
-  <!-- Audio apuntando al nombre simplificado -->
-  <audio id="musicaPollera" src="pollera.mp3" preload="auto" playsinline></audio>
+  <!-- Canción: renombra tu mp3 a pollera.mp3 -->
+  <audio id="musicaPollera" src="assets/img/pollera.mp3" preload="auto" playsinline></audio>
 
   <main id="contenedorGeneral">
-    <!-- Banda tricolor festiva -->
-    <div class="cinta-festival"></div>
+    <!-- Banderines de fiesta -->
+    <div class="banderines" aria-hidden="true"></div>
 
     <h1 id="tituloPagina">¿Qué comida colombiana eres?</h1>
-    
+    <div class="cinta" aria-hidden="true"></div>
+
     <div id="contenedorPersonaje">
-      <img class="imagen" id="cabeza" src="" alt="Parte 1" />
-      <img class="imagen" id="tronco" src="" alt="Parte 2" />
-      <img class="imagen" id="patas" src="" alt="Parte 3" />
+      <img class="imagen" id="cabeza" src="" alt="Plato de arriba" />
+      <img class="imagen" id="tronco" src="" alt="Plato del medio" />
+      <img class="imagen" id="patas" src="" alt="Plato de abajo" />
     </div>
+
+    <p id="mensaje" aria-live="polite"></p>
 
     <button id="boton">¡DESCÚBRELO!</button>
   </main>
-
 </body>
 </html>
-
-
-
-
